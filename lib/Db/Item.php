@@ -349,6 +349,10 @@ class Item extends Entity implements IAPI, \JsonSerializable
         return json_decode($this->getCategoriesJson());
     }
 
+    public function getWordCount(): int {
+        return self::countWords(strip_tags($this->getBody()));
+    }
+
     /**
      * Turns entity attributes into an array
      */
@@ -377,7 +381,8 @@ class Item extends Entity implements IAPI, \JsonSerializable
             'fingerprint' => $this->getFingerprint(),
             'categories' => $this->getCategories(),
             'sharedBy' => $this->getSharedBy(),
-            'sharedByDisplayName' => $this->getSharedByDisplayName()
+            'sharedByDisplayName' => $this->getSharedByDisplayName(),
+            'wordCount' => $this->getWordCount(),
         ];
     }
 
@@ -739,5 +744,12 @@ class Item extends Entity implements IAPI, \JsonSerializable
             stripos($mime, 'audio/') !== false ||
             stripos($mime, 'image/') !== false ||
             stripos($mime, 'video/') !== false));
+    }
+
+    private static function countWords(string $text): int
+    {
+        $text = preg_replace('/[\pP\pM]/u', '', $text); // strip punctuation (P) and combination marks (M)
+        $text = preg_replace('/[^\pL\pN]+/u', ' ', $text); // convert every sequence of non-letters (L) and non-numbers (N) to a space
+        return 1 + substr_count($text, ' ');
     }
 }
