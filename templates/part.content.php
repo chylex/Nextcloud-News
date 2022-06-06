@@ -62,6 +62,9 @@
                                 {{ item.pubDate*1000 | relativeTimestamp }}
                         </time>
                     </li>
+                    <li class="only-in-compact">
+                      <span class="date">{{ item.wordCount }} words</span>
+                    </li>
                     <li ng-click="Content.toggleStar(item.id)"
                         class="util"
                         news-stop-propagation>
