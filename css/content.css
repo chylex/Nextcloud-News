@@ -465,11 +465,6 @@
     line-height: 1;
 }
 
-#app-content .feed-view .utils .title {
-    background: none !important;
-    padding-left: 10px;
-}
-
 #app-content .utils .title h1 a {
     /*text-overflow: ellipsis;*/
     white-space: nowrap;
